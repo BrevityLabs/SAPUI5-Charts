@@ -1,0 +1,4 @@
+service {
+	"realtam.RealTamApplication.models/rt_at_channellist.attributeview" as "CHANNELLIST" 
+	key generate local "KEY";
+}

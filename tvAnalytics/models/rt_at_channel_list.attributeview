@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dimension:dimension xmlns:Dimension="http://www.sap.com/ndb/BiModelDimension.ecore" schemaVersion="1.2" id="rt_at_channel_list" defaultClient="$$client$$" defaultLanguage="$$language$$" visibility="internal" dimensionType="Standard">
+  <descriptions defaultDescription=""/>
+  <attributes>
+    <attribute id="CHANNEL_ID" key="true">
+      <descriptions defaultDescription="CHANNEL_ID"/>
+      <keyMapping schemaName="REALTAM" columnObjectName="CHANNEL_DETAILS" columnName="CHANNEL_ID"/>
+    </attribute>
+    <attribute id="CHANNEL_NAME">
+      <descriptions defaultDescription="CHANNEL_NAME"/>
+      <keyMapping schemaName="REALTAM" columnObjectName="CHANNEL_DETAILS" columnName="CHANNEL_NAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <privateDataFoundation>
+    <tableProxies>
+      <tableProxy>
+        <table schemaName="REALTAM" columnObjectName="CHANNEL_DETAILS"/>
+      </tableProxy>
+    </tableProxies>
+    <joins/>
+    <layout>
+      <shapes>
+        <shape modelObjectName="CHANNEL_DETAILS" modelObjectNameSpace="REALTAM" modelObjectType="catalog">
+          <upperLeftCorner x="70" y="30"/>
+        </shape>
+      </shapes>
+    </layout>
+  </privateDataFoundation>
+  <hierarchies/>
+</Dimension:dimension>

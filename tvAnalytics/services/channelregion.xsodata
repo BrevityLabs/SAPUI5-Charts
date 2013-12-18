@@ -1,0 +1,6 @@
+service {
+	"realtam.RealTamApplication.models::CV_Channel1_Region" as "channel1region"
+	keys ("REGION")
+	aggregates always
+	parameters via entity "InputParams";
+}

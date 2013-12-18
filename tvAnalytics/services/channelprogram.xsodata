@@ -1,0 +1,6 @@
+service {
+	"realtam.RealTamApplication.models::CV_Channel1_Program" as "channel1program"
+	keys ("PROGRAM_NAME")
+	aggregates always
+	parameters via entity "InputParams";
+}

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.2" id="CV_Channel_Region" defaultClient="$$client$$" defaultLanguage="$$language$$" hidden="false" visibility="reportingEnabled" calculationScenarioType="SCRIPT_BASED" enforceSqlExecution="false" executionSemantic="UNDEFINED" scriptParametersCaseSensitive="true">
+  <descriptions defaultDescription="CV_Market1_Region"/>
+  <localVariables>
+    <variable id="pChannel_Id" parameter="true">
+      <descriptions defaultDescription="Channel Identity"/>
+      <variableProperties datatype="VARCHAR" length="100" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="pStart_Date" parameter="true">
+      <descriptions defaultDescription="pStart_Date"/>
+      <variableProperties datatype="VARCHAR" length="12" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+    <variable id="pEnd_Date" parameter="true">
+      <descriptions defaultDescription="pEnd_Date"/>
+      <variableProperties datatype="VARCHAR" length="12" mandatory="true">
+        <valueDomain type="empty"/>
+        <selection multiLine="false" type="SingleValue"/>
+      </variableProperties>
+    </variable>
+  </localVariables>
+  <variableMappings/>
+  <dataSources/>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:SqlScriptView" id="Script_View">
+      <viewAttributes>
+        <viewAttribute datatype="VARCHAR" id="REGION" length="100"/>
+        <viewAttribute datatype="INTEGER" id="COUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <localVariable>#pChannel_Id</localVariable>
+      <localVariable>#pStart_Date</localVariable>
+      <localVariable>#pEnd_Date</localVariable>
+      <definition> 
+ /********* Begin Procedure Script ************/ 
+ BEGIN 
+	var_out = select 
+		b.REGION as &quot;REGION&quot;,
+		count(b.REGION) as &quot;COUNT&quot;
+	from &quot;REALTAM&quot;.&quot;USER_PULSE&quot; a 
+		inner join &quot;REALTAM&quot;.&quot;USER_DEMOGRAPHIC&quot; b
+			on a.USER_ID = b.USER_ID
+		where a.CHANNEL_ID = :pChannel_Id and
+			TO_DATE(a.TIME_STAMP) >= TO_DATE(:pStart_Date) and
+			TO_DATE(a.TIME_STAMP) &lt;= TO_DATE(:pEnd_Date)
+		group by b.REGION;
+END
+ /********* End Procedure Script ************/</definition>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Script_View">
+    <attributes>
+      <attribute id="REGION">
+        <descriptions defaultDescription="REGION"/>
+        <keyMapping columnObjectName="Script_View" columnName="REGION"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="COUNT" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="COUNT"/>
+        <measureMapping columnObjectName="Script_View" columnName="COUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>
